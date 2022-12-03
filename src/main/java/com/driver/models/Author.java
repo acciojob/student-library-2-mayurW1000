@@ -1,9 +1,7 @@
 package com.driver.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +10,8 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Author {
 
     @Id
@@ -29,8 +29,6 @@ public class Author {
     @JsonIgnoreProperties("author")
     private List<Book> booksWritten;
 
-    public Author() {
-    }
 
 }
 

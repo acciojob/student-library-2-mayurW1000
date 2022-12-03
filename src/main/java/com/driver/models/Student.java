@@ -1,10 +1,7 @@
 package com.driver.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -16,7 +13,8 @@ import java.util.Date;
 @Getter
 @Data
 @AllArgsConstructor
-
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Student {
 
     @Id
@@ -30,8 +28,6 @@ public class Student {
 
     private String country;
 
-    public Student() {
-    }
 
     // alter table student add foreign key constraint card references Card(id)
 
