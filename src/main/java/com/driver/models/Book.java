@@ -2,11 +2,19 @@ package com.driver.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@Data
 public class Book {
 
     @Id
@@ -27,7 +35,6 @@ public class Book {
     @JoinColumn
     @JsonIgnoreProperties("books")
     private Card card;
-
 
     @Column(columnDefinition = "TINYINT(1)")
     private boolean available;
