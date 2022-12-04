@@ -31,11 +31,11 @@ public class Author {
     public Author() {
     }
 
-    public Author(String name, String email, String country, int id){
-        this.country=country;
-        this.id=id;
-        this.email=email;
-        this.name=name;
+    public Author(String name, String email, int age, String country){
+        this.name = name;
+        this.email = email;
+        this.age = age;
+        this.country = country;
     }
 }
 
