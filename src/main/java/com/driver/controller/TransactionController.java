@@ -18,11 +18,8 @@ public class TransactionController {
 
     @PostMapping("issueBook")
     public ResponseEntity issueBook(@RequestParam("cardId") int cardId, @RequestParam("bookId") int bookId) throws Exception{
-        try{transactionService.issueBook(cardId, bookId);
-            return new ResponseEntity<>("transaction completed", HttpStatus.ACCEPTED);}
-        catch (Exception e){
-            return new ResponseEntity<>("Exception occured",HttpStatus.BAD_GATEWAY);
-        }
+            transactionService.issueBook(cardId, bookId);
+            return new ResponseEntity<>("transaction completed", HttpStatus.ACCEPTED);
     }
 
     //Add required annotations

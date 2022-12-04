@@ -47,18 +47,35 @@ public class TransactionService {
         // If it fails: throw new Exception("Book is either unavailable or not present");
         Book book = bookRepository5.findById(bookId).get();
         boolean present = book.isAvailable();
+        Card card = cardRepository5.findById(cardId).get();
+        Transaction transaction = new Transaction();
         if(bookRepository5.existsById(bookId) == false || present==false){
+            transaction.setIssueOperation(false);
+            transaction.setTransactionStatus(TransactionStatus.FAILED);
+            transaction.setFineAmount(0);
+            transaction.setBook(book);
+            transaction.setCard(card);
             throw new Exception("Book is either unavailable or not present");
         }
         //2. card is present and activated
         // If it fails: throw new Exception("Card is invalid");
-        Card card = cardRepository5.findById(cardId).get();
+
         if(cardRepository5.existsById(cardId) == false || card.getCardStatus().toString().equals("DEACTIVATED")){
+            transaction.setIssueOperation(false);
+            transaction.setTransactionStatus(TransactionStatus.FAILED);
+            transaction.setFineAmount(0);
+            transaction.setBook(book);
+            transaction.setCard(card);
             throw new Exception("Book is either unavailable or not present");
         }
         //3. number of books issued against the card is strictly less than max_allowed_books
         // If it fails: throw new Exception("Book limit has reached for this card");
         if(card.getBooks().size() >= max_allowed_books){
+            transaction.setIssueOperation(false);
+            transaction.setTransactionStatus(TransactionStatus.FAILED);
+            transaction.setFineAmount(0);
+            transaction.setBook(book);
+            transaction.setCard(card);
             throw new Exception("Book limit has reached for this card");
         }
         //connect book with card
@@ -66,7 +83,6 @@ public class TransactionService {
         book.setAvailable(false);
         book.setCard(card);
 
-        Transaction transaction = new Transaction();
         transaction.setIssueOperation(true);
         transaction.setTransactionStatus(SUCCESSFUL);
         transaction.setFineAmount(0);
