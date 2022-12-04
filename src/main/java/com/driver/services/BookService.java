@@ -19,16 +19,26 @@ public class BookService {
     }
 
     public List<Book> getBooks(String genre, boolean available, String author){
-        List<Book> books = new ArrayList<>();
+        List<Book> books = null;
         //find the elements of the list by yourself
-        if(author==null || author.equals("")){
-            return bookRepository2.findBooksByGenre(genre,available);
+        if(author==null ) {
+            if (genre == null) {
+                books = bookRepository2.findByAvailability(available);
+            } else if (genre != null) {
+                books = bookRepository2.findBooksByGenre(genre, available);
+            }
         }
-        else if(genre==null || genre.equals("")){
-            return bookRepository2.findBooksByAuthor(author,available);
+        else if(genre==null ){
+            if(author!=null) {
+                books = bookRepository2.findBooksByAuthor(author, available);
+            }
+            else{
+                books = bookRepository2.findByAvailability(available);
+            }
         }
         else{
-            return bookRepository2.findBooksByGenreAuthor(genre,author,available);
+            books= bookRepository2.findBooksByGenreAuthor(genre,author,available);
         }
+        return books;
     }
 }
