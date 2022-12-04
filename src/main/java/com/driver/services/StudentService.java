@@ -1,5 +1,6 @@
 package com.driver.services;
 
+import com.driver.models.Card;
 import com.driver.models.Student;
 import com.driver.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,8 @@ public class StudentService {
     }
 
     public void createStudent(Student student){
-        cardService4.createAndReturn(student);
+        Card card = cardService4.createAndReturn(student);
+        student.setCard(card);
         studentRepository4.save(student);
     }
 

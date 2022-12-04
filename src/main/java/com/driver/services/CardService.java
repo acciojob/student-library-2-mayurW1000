@@ -18,7 +18,6 @@ public class CardService {
         //link student with a new card
         card.setCardStatus(CardStatus.ACTIVATED);
         cardRepository3.save(card);
-        student.setCard(card);
         return card;
     }
 
