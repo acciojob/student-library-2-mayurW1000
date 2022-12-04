@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static com.driver.models.CardStatus.DEACTIVATED;
 import static com.driver.models.TransactionStatus.SUCCESSFUL;
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -49,13 +50,13 @@ public class TransactionService {
         boolean present = book.isAvailable();
         Card card = cardRepository5.findById(cardId).get();
         Transaction transaction = new Transaction();
-        if(bookRepository5.existsById(bookId) == false || present==false){
+        if( !bookRepository5.existsById(bookId) || !present){
             throw new Exception("Book is either unavailable or not present");
         }
         //2. card is present and activated
         // If it fails: throw new Exception("Card is invalid");
 
-        if(cardRepository5.existsById(cardId) == false || card.getCardStatus().equals("DEACTIVATED")){
+        if(!cardRepository5.existsById(cardId)  || card.getCardStatus().equals(DEACTIVATED)){
             throw new Exception("Card is invalid");
         }
         //3. number of books issued against the card is strictly less than max_allowed_books
@@ -63,8 +64,8 @@ public class TransactionService {
         if(card.getBooks().size() == max_allowed_books){
             throw new Exception("Book limit has reached for this card");
         }
-        //connect book with card
 
+        //connect book with card
         book.setAvailable(false);
         book.setCard(card);
 
