@@ -55,27 +55,30 @@ public class TransactionService {
             transaction.setFineAmount(0);
             transaction.setBook(book);
             transaction.setCard(card);
+            transactionRepository5.save(transaction);
             throw new Exception("Book is either unavailable or not present");
         }
         //2. card is present and activated
         // If it fails: throw new Exception("Card is invalid");
 
-        if(cardRepository5.existsById(cardId) == false || card.getCardStatus().toString().equals("DEACTIVATED")){
+        if(cardRepository5.existsById(cardId) == false || card.getCardStatus().equals("DEACTIVATED")){
             transaction.setIssueOperation(false);
             transaction.setTransactionStatus(TransactionStatus.FAILED);
             transaction.setFineAmount(0);
             transaction.setBook(book);
             transaction.setCard(card);
+            transactionRepository5.save(transaction);
             throw new Exception("Book is either unavailable or not present");
         }
         //3. number of books issued against the card is strictly less than max_allowed_books
         // If it fails: throw new Exception("Book limit has reached for this card");
-        if(card.getBooks().size() >= max_allowed_books){
+        if(card.getBooks().size() > max_allowed_books){
             transaction.setIssueOperation(false);
             transaction.setTransactionStatus(TransactionStatus.FAILED);
             transaction.setFineAmount(0);
             transaction.setBook(book);
             transaction.setCard(card);
+            transactionRepository5.save(transaction);
             throw new Exception("Book limit has reached for this card");
         }
         //connect book with card
