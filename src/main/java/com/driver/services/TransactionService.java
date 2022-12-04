@@ -100,6 +100,7 @@ public class TransactionService {
         //make the book available for other users
         Book book = transaction.getBook();
         book.setAvailable(true);
+        book.setCard(null);
         //make a new transaction for return book which contains the fine amount as well
 
         Transaction returnBookTransaction  = null;
